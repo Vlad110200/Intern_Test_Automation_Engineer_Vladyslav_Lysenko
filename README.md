@@ -1,3 +1,4 @@
+Test task:
 Given a marketplace - https://giftly.klickly-dev.com/marketplace Goal - automate 3 test cases in the way of a real project having all attributes for further auto-tests expansion.
 
 Test cases:
