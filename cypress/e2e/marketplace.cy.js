@@ -47,7 +47,7 @@ describe('Marketplace page', () => {
     });
   });
   
-  it.only('should display products on the second page different from the first one', () => {
+  it('should display products on the second page different from the first one', () => {
     marketplacePage.scrollTo(element.lastProduct);
     marketplacePage.checkSecondPageProducts();
   });
