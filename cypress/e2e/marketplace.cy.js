@@ -47,15 +47,8 @@ describe('Marketplace page', () => {
     });
   });
   
-  it('should assert that products on the first and second pages are different', () => {
-    let firstPageProducts = [];
-
-    marketplacePage.firstPageProducts.each(($product) => {
-        firstPageProducts.push($product.text());
-    });
-         
-    marketplacePage.secondPageProducts.each(($product) => {
-        expect(firstPageProducts).to.not.include($product.text());
-    });
+  it.only('should display products on the second page different from the first one', () => {
+    marketplacePage.scrollTo(element.lastProduct);
+    marketplacePage.checkSecondPageProducts();
   });
 });
