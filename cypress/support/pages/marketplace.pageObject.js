@@ -39,6 +39,33 @@ class MarketPlacePageObject extends PageObject {
       .should('contain.text', title)
   }
 
+  scrollTo(element) {
+    cy.get('.ant-row > .ant-col').last().then(($div) => {
+      const el = $div[0];
+      el.scrollIntoView();
+    });
+  }
+
+  checkSecondPageProducts() {
+    const firstPageUrl = 'https://kcp-api.klickly-dev.com/marketplace/promotions?page=1';
+    const secondPageUrl = 'https://kcp-api.klickly-dev.com/marketplace/promotions?page=2';
+
+    cy.request('GET', firstPageUrl).then((firstPageResponse) => {
+      cy.request('GET', secondPageUrl).then((secondPageResponse) => {
+        let duplicate;
+        for (let i = 0; i < secondPageResponse.body.promotions.length; i++) {
+          const productId = secondPageResponse.body.promotions[i].id
+          duplicate = firstPageResponse.body.promotions.some((item) => item.id.includes(productId));
+
+          if (duplicate) {
+            throw new Error(`Some of the products are duplicated with the first page.`);
+          };
+        };
+        expect(duplicate, 'All products on the second page are different from the first one').to.equal(false)
+      });
+    });
+  }
+
   get firstPageProducts() {
     return cy.get('[data-e2e="product-card"]');
   }
